@@ -7,15 +7,11 @@ services:
             dockerfile: ./docker/php/Dockerfile
         container_name: csv_processor_app
         volumes:
-            - ./resources/views:/var/www/html/resources/views
-            - ./app:/var/www/html/app
-            - ./routes:/var/www/html/routes
-            - ./storage:/var/www/html/storage
+            - ./:/var/www/html
+            - /var/www/html/vendor
+            - /var/www/html/node_modules
             - build-assets:/var/www/html/public/build
-            - ./composer.json:/var/www/html/composer.json
-            - ./composer.lock:/var/www/html/composer.lock
-            - ./package.json:/var/www/html/package.json
-            - ./package-lock.json:/var/www/html/package-lock.json
+            - ./docker/php/custom-php.ini:/usr/local/etc/php/conf.d/custom-php.ini
         environment:
             - PHP_OPCACHE_VALIDATE_TIMESTAMPS=1
         depends_on:
@@ -27,12 +23,24 @@ services:
             dockerfile: ./docker/nginx/Dockerfile
         container_name: csv_processor_server
         volumes:
-            - ./public:/var/www/html/public
+            - ./:/var/www/html
+            - /var/www/html/vendor
+            - /var/www/html/node_modules
             - build-assets:/var/www/html/public/build
         ports:
             - "7000:80"
         depends_on:
             - app
+            - redis
+    
+    redis:
+        image: redis:alpine
+        container_name: csv_processor_redis
+        ports:
+            - "6380:6379"
+        volumes:
+            - redis_data:/data
+
 
     mysql:
         image: mysql:8.0
@@ -49,4 +57,5 @@ services:
 
 volumes:
     build-assets:
-    mysql_data: 
+    mysql_data:
+    redis_data:
