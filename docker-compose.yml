@@ -1,0 +1,52 @@
+version: "3.8"
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: ./docker/php/Dockerfile
+        container_name: csv_processor_app
+        volumes:
+            - ./resources/views:/var/www/html/resources/views
+            - ./app:/var/www/html/app
+            - ./routes:/var/www/html/routes
+            - ./storage:/var/www/html/storage
+            - build-assets:/var/www/html/public/build
+            - ./composer.json:/var/www/html/composer.json
+            - ./composer.lock:/var/www/html/composer.lock
+            - ./package.json:/var/www/html/package.json
+            - ./package-lock.json:/var/www/html/package-lock.json
+        environment:
+            - PHP_OPCACHE_VALIDATE_TIMESTAMPS=1
+        depends_on:
+            - mysql
+
+    webserver:
+        build:
+            context: .
+            dockerfile: ./docker/nginx/Dockerfile
+        container_name: csv_processor_server
+        volumes:
+            - ./public:/var/www/html/public
+            - build-assets:/var/www/html/public/build
+        ports:
+            - "7000:80"
+        depends_on:
+            - app
+
+    mysql:
+        image: mysql:8.0
+        container_name: csv_processor_db
+        environment:
+            MYSQL_DATABASE: db_csv
+            MYSQL_USER: laravel_user
+            MYSQL_PASSWORD: your_password
+            MYSQL_ROOT_PASSWORD: root_password
+        ports:
+            - "3307:3306"
+        volumes:
+            - mysql_data:/var/lib/mysql
+
+volumes:
+    build-assets:
+    mysql_data: 
