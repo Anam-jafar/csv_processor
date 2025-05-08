@@ -2,6 +2,19 @@
 
 A Laravel 12 application that allows users to upload product data via CSV, processes the data in the background, and provides real-time feedback on processing status.
 
+<p align="center">
+  <a href="https://ec9d-2001-e68-5456-4c9b-d474-c2bb-9078-17da.ngrok-free.app/">
+    <img src="https://img.shields.io/badge/Live%20Demo-Click%20Here-brightgreen?style=for-the-badge" alt="Live Demo" />
+  </a>
+</p>
+
+
+<p align="center">
+  <img src="./public/static/v4.png" alt="Application Preview" />
+</p>
+
+[Download Sample CSV](./public/static/yoprint_test_updated.csv)
+
 ## 🚀 Features
 
 * **CSV Upload Interface**
@@ -54,8 +67,8 @@ This project is fully containerized for easy setup.
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-repo/yoprint-csv-app.git
-   cd yoprint-csv-app
+   git clone https://github.com/Anam-jafar/csv_processor.git
+   cd csv_processor
    ```
 
 2. Copy the environment file:
@@ -78,13 +91,12 @@ This project is fully containerized for easy setup.
 * **Tailwind CSS**
 * **Laravel Horizon**
 * **Redis**
-* **SQLite**
+* **MySQL**
 * **Docker & Docker Compose**
 
 ---
 
 ### 👨‍💻 Author
 
-**Anam Ibn Jafar**\\
+**Anam Ibn Jafar**
 
-live link : https://ec9d-2001-e68-5456-4c9b-d474-c2bb-9078-17da.ngrok-free.app/
